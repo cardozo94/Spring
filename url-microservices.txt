@@ -1,0 +1,39 @@
+v1
+limits-service --> http://localhost:8080/limits
+currency-exchage-service --> http://localhost:8000/currency-exchange/from/USD/to/INR
+currency-conversion-service --> http://localhost:8100/currency-converter/from/EUR/to/INR/quantity/1000
+							--> http://localhost:8100/currency-converter-feign/from/EUR/to/INR/quantity/1000
+naming server (eureka) --> http://localhost:8761/
+currency-exchage-service through API Gateway(zuul) --> http://localhost:8765/currency-exchange-service/currency-exchange/from/USD/to/INR
+currency-conversion-service through API Gateway(zuul) --> http://localhost:8765/currency-conversion-service/currency-converter-feign/from/EUR/to/INR/quantity/1000
+zipkin server --> http://localhost:9411/zipkin
+hystrix example --> http://localhost:8080/fault-tolerance-example
+spring-cloud-config-server --> http://localhost:8888/limits-service/default -- http://localhost:8888/limits-service/qa -- http://localhost:8888/limits-service/dev
+
+v2
+limits-service --> http://localhost:8080/limits
+spring-cloud-config-server --> http://localhost:8888/limits-service/default 
+						   --> http://localhost:8888/limits-service/qa
+						   --> http://localhost:8888/limits-service/dev
+currency-exchage-service --> http://localhost:8000/currency-exchange/from/USD/to/INR
+						 --> http://localhost:8001/currency-exchange/from/USD/to/INR
+						 --> http://localhost:8002/currency-exchange/from/USD/to/INR
+currency-conversion-service --> http://localhost:8100/currency-converter/from/EUR/to/INR/quantity/1000
+							--> http://localhost:8100/currency-converter-feign/from/EUR/to/INR/quantity/1000
+naming server (eureka) --> http://localhost:8761/
+
+currency-exchage-service through API Gateway(spring cloud) --> http://localhost:8765/currency-exchange-service/currency-exchange/from/USD/to/INR (Pay attention to the case)
+												custom URI --> http://localhost:8765/currency-exchange/from/USD/to/INR
+currency-conversion-service through API Gateway(spring cloud) --> http://localhost:8765/currency-conversion-service/currency-converter-feign/from/EUR/to/INR/quantity/1000 (Pay attention to the case)
+												custom URI --> http://localhost:8765/currency-converter-feign/from/EUR/to/INR/quantity/1000 
+														   --> http://localhost:8765/currency-converter/from/EUR/to/INR/quantity/1000 
+														   --> http://localhost:8765/currency-converter-new/from/EUR/to/INR/quantity/1000 
+currency-exchage-service circuit breaker (resilience4j) --> http://localhost:8000/sample-api
+zipkin server --> http://localhost:9411/zipkin
+'1', 'Camilo', 'Cardozo', 'camcar', '123456789', 'Colombia', 'Java'
+
+kubernetes
+currency-exchage-service --> http://34.71.199.46:8000/currency-exchange/from/USD/to/INR
+	actuator --> http://34.71.199.46:8000/actuator
+currency-conversion-service --> http://35.239.10.108:8100/currency-converter-feign/from/EUR/to/INR/quantity/1000
+
